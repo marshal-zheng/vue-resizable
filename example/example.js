@@ -29,10 +29,6 @@ const App = {
     });
 
     const onFirstBoxResize = (event, {element, size, handle}) => {
-      // console.log('event', event)
-      // console.log('element', element)
-      // console.log('size', size)
-      // console.log('handle', handle)
       state.width = size.width;
       state.height = size.height;
     };
