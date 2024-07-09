@@ -7,6 +7,7 @@ You can either use the `<Resizable>` element directly, or use the much simpler `
 See the example and associated code in [ExampleLayout](/example/example.js) and
 [ResizableBox](/lib/ResizableBox.tsx) for more details.
 
+![resizable](https://github.com/marshal-zheng/vue-resizable/assets/24412317/f2713596-a6a7-45e9-a09f-feb527dfbeee)
 
 ## Features
 
