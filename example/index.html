@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Vue Resizable</title>
+  <style type="text/css">
+    .layoutRoot {
+      display: flex;
+      background: #eee;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .absoluteLayout {
+      height: 600px;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+    }
+    .scaledLayout {
+      width: 125%;
+      left: -12.5vw;
+      transform: scale(0.75);
+      margin-top: -7.5vh;
+    }
+
+    .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: #ccc;
+      border: 1px solid black;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      overflow: hidden;
+      position: relative;
+      margin: 20px;
+    }
+    .box .text {
+      text-align: center;
+    }
+
+    .hover-handles .vue-resizable-handle {
+      display: none;
+    }
+    .hover-handles:hover .vue-resizable-handle {
+      display: block;
+    }
+    .absolutely-positioned {
+      position: absolute !important;
+    }
+    .left-aligned {
+      left: 0;
+    }
+    .right-aligned {
+      right: 0;
+    }
+    .top-aligned {
+      top: 0;
+    }
+    .bottom-aligned {
+      bottom: 0;
+    }
+
+    .custom-box {
+      overflow: visible;
+    }
+    .custom-handle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: #1153aa;
+      opacity: 0.75;
+      border-radius: 4px;
+    }
+    .custom-handle-sw {
+      bottom: -4px;
+      left: -4px;
+      cursor: sw-resize;
+    }
+    .custom-handle-se {
+      bottom: -4px;
+      right: -4px;
+      cursor: se-resize;
+    }
+    .custom-handle-nw {
+      top: -4px;
+      left: -4px;
+      cursor: nw-resize;
+    }
+    .custom-handle-ne {
+      top: -4px;
+      right: -4px;
+      cursor: ne-resize;
+    }
+    .custom-handle-w,
+    .custom-handle-e {
+      top: 50%;
+      margin-top: -4px;
+      cursor: ew-resize;
+    }
+    .custom-handle-w {
+      left: -4px;
+    }
+    .custom-handle-e {
+      right: -4px;
+    }
+    .custom-handle-n,
+    .custom-handle-s {
+      left: 50%;
+      margin-left: -4px;
+      cursor: ns-resize;
+    }
+    .custom-handle-n {
+      top: -4px;
+    }
+    .custom-handle-s {
+      bottom: -4px;
+    }
+    .custom-resize-handle-component {
+      background-color: red;
+    }
+    .vue-resizable {
+      position: relative;
+    }
+    .vue-resizable-handle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-repeat: no-repeat;
+      background-origin: content-box;
+      box-sizing: border-box;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iNnB4Ij48ZyBvcGFjaXR5PSIwLjMwMiI+PHBhdGggZD0iTSA2IDYgTCAwIDYgTCAwIDQuMiBMIDQgNC4yIEwgNC4yIDQuMiBMIDQuMiAwIEwgNiAwIEwgNiA2IEwgNiA2IFoiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+');
+      background-position: bottom right;
+      padding: 0 3px 3px 0;
+    }
+    .vue-resizable-handle-sw {
+      bottom: 0;
+      left: 0;
+      cursor: sw-resize;
+      transform: rotate(90deg);
+    }
+    .vue-resizable-handle-se {
+      bottom: 0;
+      right: 0;
+      cursor: se-resize;
+    }
+    .vue-resizable-handle-nw {
+      top: 0;
+      left: 0;
+      cursor: nw-resize;
+      transform: rotate(180deg);
+    }
+    .vue-resizable-handle-ne {
+      top: 0;
+      right: 0;
+      cursor: ne-resize;
+      transform: rotate(270deg);
+    }
+    .vue-resizable-handle-w,
+    .vue-resizable-handle-e {
+      top: 50%;
+      margin-top: -10px;
+      cursor: ew-resize;
+    }
+    .vue-resizable-handle-w {
+      left: 0;
+      transform: rotate(135deg);
+    }
+    .vue-resizable-handle-e {
+      right: 0;
+      transform: rotate(315deg);
+    }
+    .vue-resizable-handle-n,
+    .vue-resizable-handle-s {
+      left: 50%;
+      margin-left: -10px;
+      cursor: ns-resize;
+    }
+    .vue-resizable-handle-n {
+      top: 0;
+      transform: rotate(225deg);
+    }
+    .vue-resizable-handle-s {
+      bottom: 0;
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+<body>
+<div id="container"></div>
+<script src="./vue-3.2.36.js"></script>
+<script id="vue-resizable-script" src="../build/web//vue-resizable.min.js"></script>
+<!-- for imported script -->
+<script src="//unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="./example.js"></script>
+</body>
+</html>
