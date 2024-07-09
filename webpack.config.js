@@ -76,7 +76,6 @@ module.exports = (env, argv) => {
     plugins: [
       new VueLoaderPlugin(),
       process.env.ANALYZE && new BundleAnalyzerPlugin(),
-      new LodashModuleReplacementPlugin(),
       new webpack.EnvironmentPlugin({
         DRAGGABLE_DEBUG: !isProduction,
         NODE_ENV: isProduction ? 'production' : 'development'
@@ -95,7 +94,12 @@ module.exports = (env, argv) => {
           });
         },
       },
-      new ForkTsCheckerWebpackPlugin()
+      new ForkTsCheckerWebpackPlugin(),
+      new LodashModuleReplacementPlugin({
+        paths: true,
+        shorthands: true,
+        collections: true
+      })
     ].filter(Boolean),
     optimization: {
       minimize: isProduction,
