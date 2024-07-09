@@ -156,23 +156,13 @@ const App = {
         <ResizableBox className="box absolutely-positioned bottom-aligned left-aligned" :height="200" :width="200" :resizeHandles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']">
           <span class="text">Bottom-left Aligned</span>
         </ResizableBox>
-        <Resizable
-          className="box absolutely-positioned"
-          :height="state.absoluteHeight"
-          :width="state.absoluteWidth"
-          :fnResize="onResizeAbsolute"
-          :resizeHandles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']"
-        >
-          <div
-            :style="{
-              width: state.absoluteWidth,
-              height: state.absoluteHeight,
-              margin: absMargin,
-            }"
-          >
-            <span class="text">{{"Raw use of <Resizable> element with controlled position. Resize and reposition in all directions."}}</span>
-          </div>
-        </Resizable>
+        <ResizableBox className="box absolutely-positioned top-aligned right-aligned" :height="200" :width="200"  :transformScale="0.75" :resizeHandles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']">
+          <span className="text">{{"<ResizableBox> with correct scale 0.75"}}</span>
+        </ResizableBox>
+
+        <ResizableBox className="box absolutely-positioned bottom-aligned right-aligned" :height="200" :width="200"  :transformScale="0.75" :resizeHandles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']">
+          <span className="text">{"<ResizableBox> with correct scale 0.75"}</span>
+        </ResizableBox>
       </div>
     </div>
   `
