@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.1] - (July 10, 2024)
+## [0.9.10] - (July 10, 2024)
 
 ### Chores
 
@@ -24,5 +24,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
-[1.0.1]: https://github.com///releases/tag/v1.0.1
+[0.9.10]: https://github.com///releases/tag/v0.9.10
 
