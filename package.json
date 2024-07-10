@@ -1,6 +1,6 @@
 {
   "name": "@marsio/vue-resizable",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Vue resizable component",
   "main": "build/cjs/cjs.js",
   "unpkg": "build/web/vue-resizable.min.js",
