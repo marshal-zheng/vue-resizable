@@ -1,6 +1,6 @@
 {
   "name": "@marsio/vue-resizable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vue resizable component",
   "main": "build/cjs/cjs.js",
   "unpkg": "build/web/vue-resizable.min.js",
@@ -58,7 +58,7 @@
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "fs-extra": "^11.2.0",
     "husky": "^9.0.11",
-    "inquirer": "^10.0.1",
+    "inquirer": "~8.2.6",
     "jasmine-core": "^5.1.1",
     "lint-staged": "^15.2.7",
     "lodash-webpack-plugin": "^0.11.6",
