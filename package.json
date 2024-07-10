@@ -1,6 +1,6 @@
 {
   "name": "@marsio/vue-resizable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vue resizable component",
   "main": "build/cjs/cjs.js",
   "unpkg": "build/web/vue-resizable.min.js",
@@ -90,6 +90,7 @@
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@marsio/vue-draggable": "file:/Users/admin/HQ/vue-draggable/marsio-vue-draggable-1.0.3.tgz",
+    "git-cliff": "^2.4.0",
     "lodash": "^4.17.21",
     "vue": "^3.2.23",
     "vue-types": "^5.1.1"
