@@ -32,7 +32,8 @@ const release = async () => {
     const { semverType: type } = answers;
 
     const currentVersion = getCurrentVersion();
-    const nextVersion = semver.inc(currentVersion, type.toLowerCase());
+    const isFirstRelease = !fs.existsSync('./CHANGELOG.md');
+    const nextVersion = isFirstRelease ? currentVersion : semver.inc(currentVersion, type.toLowerCase());
 
     const existingTags = execSync('git tag').toString().split('\n');
     if (existingTags.includes(`v${nextVersion}`)) {
