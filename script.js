@@ -41,14 +41,16 @@ const release = async () => {
       return;
     }
 
-    const packageJsonPath = './package.json';
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-    packageJson.version = nextVersion;
-    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+    if (!isFirstRelease) {
+      const packageJsonPath = './package.json';
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+        packageJson.version = nextVersion;
+        fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
-    // Commit the version update
-    execSync('git add package.json');
-    execSync(`git commit -m "release v${nextVersion}" --no-verify`);
+        // Commit the version update
+        execSync('git add package.json');
+        execSync(`git commit -m "release v${nextVersion}" --no-verify`);
+    }
 
     // Create a temporary tag for generating the changelog
     const tempTag = `v${nextVersion}`;
