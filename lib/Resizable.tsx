@@ -1,35 +1,52 @@
 import { DraggableCore } from '@marsio/vue-draggable'
-import { defineComponent, onUnmounted, ref, Ref, VNode, renderSlot, cloneVNode, h, PropType } from 'vue';
+import { defineComponent, onUnmounted, ref, Ref, VNode, renderSlot, cloneVNode, h, PropType, DefineComponent } from 'vue';
 import { css } from '@emotion/css';
-import VueTypes from 'vue-types'
 import { get } from 'lodash'
 
 import { generateHandleStyles } from './utils'
 
-import type {ResizeHandleAxis, VueRef, DragCallbackData} from './propTypes';
+import type {ResizeHandleAxis, VueRef, DragCallbackData, Props} from './propTypes';
 
 const resizableStyle = css`
   position: relative;
   ${generateHandleStyles()}
 `;
 
-import { resizableProps } from "./propTypes";
+import { resizableProps, Axis } from "./propTypes";
 
 export const Resizable = defineComponent({
   name: 'Resizable',
   props: {
-    ...resizableProps,
-    axis: VueTypes.string.def('both'),
-    handleSize: VueTypes.array.def([20, 20]),
-    lockAspectRatio: VueTypes.bool.def(false),
-    minConstraints: VueTypes.array.def([20, 20]),
-    maxConstraints: VueTypes.array.def([Infinity, Infinity]),
+    ...(resizableProps as DefineComponent<Props>['props']),
+    axis: {
+      type: String as PropType<Axis>,
+      default: 'both',
+    },
+    handleSize: {
+      type: Array,
+      default: () => [20, 20],
+    },
+    lockAspectRatio: {
+      type: Boolean,
+      default: false,
+    },
+    minConstraints: {
+      type: Array,
+      default: () => [20, 20],
+    },
+    maxConstraints: {
+      type: Array,
+      default: () => [Infinity, Infinity],
+    },
     resizeHandles: {
       type: Array as PropType<ResizeHandleAxis[]>,
       default: () => ['se'],
       required: true
     },
-    transformScale: VueTypes.number.def(1)
+    transformScale: {
+      type: Number,
+      default: 1
+    }
   },
   setup(props, { slots }) {
     const handleRefs: {[key: string]: Ref<HTMLElement | null>} = {};
@@ -85,7 +102,9 @@ export const Resizable = defineComponent({
     }
 
     const resizeHandler = (handlerName: 'fnResize' | 'fnResizeStart' | 'fnResizeStop', axis: ResizeHandleAxis) => {
-      return (e, {node, deltaX, deltaY}: DragCallbackData) => {
+      return (e: MouseEvent, data: DragCallbackData) => {
+        const { node } = data
+        let { deltaX, deltaY } = data
         // Reset data in case it was left over somehow (should not be possible)
         if (handlerName === 'fnResizeStart') resetData();
   
@@ -124,8 +143,8 @@ export const Resizable = defineComponent({
         if (axisV === 'n') deltaY = -deltaY;
   
         // Update w/h by the deltas. Also factor in transformScale.
-        let width = props.width + (canDragX ? deltaX / props.transformScale : 0);
-        let height = props.height + (canDragY ? deltaY / props.transformScale : 0);
+        let width: number = props.width + (canDragX ? deltaX / props.transformScale : 0);
+        let height: number = props.height + (canDragY ? deltaY / props.transformScale : 0);
   
         // Run user-provided constraints.
         [width, height] = runConstraints(width, height);
@@ -137,7 +156,6 @@ export const Resizable = defineComponent({
         // Don't call 'fnResize' if dimensions haven't changed.
         const shouldSkipCb = handlerName === 'fnResize' && !dimensionsChanged;
         if (cb && !shouldSkipCb) {
-          e.persist?.();
           cb(e, {node, size: {width, height}, handle: axis});
         }
   
@@ -192,7 +210,7 @@ export const Resizable = defineComponent({
         }
 
           const handlers = props.resizeHandles.map((handleAxis: ResizeHandleAxis) => {
-          const refs: VueRef<HTMLElement> = handleRefs[handleAxis] ?? (handleRefs[handleAxis] = ref(null));
+          const refs = handleRefs[handleAxis] ?? (handleRefs[handleAxis] = ref(null));
 
           return (
             <DraggableCore

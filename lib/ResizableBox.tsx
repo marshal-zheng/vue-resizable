@@ -1,17 +1,21 @@
-import { defineComponent, reactive } from 'vue';
-import VueTypes from 'vue-types'
+import { defineComponent, reactive, DefineComponent, PropType } from 'vue';
 import { get } from 'lodash'
 
 import { Resizable } from './Resizable';
-import {resizableProps} from "./propTypes";
-import type { ResizableBoxState } from './propTypes';
+import { resizableProps, Props } from "./propTypes";
+import type { ResizableBoxState, Kv } from './propTypes';
+
+type ResizableBoxInstanceProps = DefineComponent<Props>['props'];
 
 const ResizableBox = defineComponent({
   props: {
-    ...resizableProps,
-    styles: VueTypes.object.def({})
+    ...(resizableProps as DefineComponent<Props>['props']),
+    styles: {
+      type: Object as PropType<Kv>,
+      default: () => ({}),
+    },
   },
-  setup(props, { emit, slots }) {
+  setup(props: ResizableBoxInstanceProps, { emit, slots }) {
     const state = reactive<ResizableBoxState>({
       width: props.width,
       height: props.height,
