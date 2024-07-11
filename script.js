@@ -91,6 +91,11 @@ const release = async () => {
 
 // publish the package
 const publish = () => {
+  const buildDir = './build';
+  if (fs.existsSync(buildDir)) {
+    fs.rmSync(buildDir, { recursive: true, force: true });
+    console.log(chalk.yellow('Build directory removed'));
+  }
   build();
   execSync('npm publish');
   console.log(chalk.green('Published to npm'));
