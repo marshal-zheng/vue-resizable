@@ -1,5 +1,6 @@
 .idea
 *.iml
+*.tgz
 node_modules/
 build/
 docs/
@@ -12,3 +13,4 @@ docs/
 package-lock.json
 
 pnpm-lock.yaml
+yarn.lock
