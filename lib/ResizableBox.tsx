@@ -46,6 +46,7 @@ const ResizableBox = defineComponent({
         resizeHandles={props.resizeHandles}
         transformScale={props.transformScale}
         width={state.width}
+        hoverHandles={props.hoverHandles}
       >
         <div style={{ width: `${state.width}px`, height: `${state.height}px`}}>{slots.default?.()}</div>
       </Resizable>

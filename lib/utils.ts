@@ -21,10 +21,10 @@ export function cloneElement(vnode: VNode, props) {
 
 export function generateHandleStyles (): string {
   return `
-    .hover-handles:hover .vue-resizable-handle {
+    &.hover-handles:hover .vue-resizable-handle {
       display: block;
     }
-    .hover-handles .vue-resizable-handle {
+    &.hover-handles .vue-resizable-handle {
       display: none;
     }
     .vue-resizable-handle {

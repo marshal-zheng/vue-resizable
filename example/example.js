@@ -19,7 +19,7 @@ const App = {
     const absMargin = `${state.absoluteTop} 0 0 ${state.absoluteLeft}`
 
     const CustomResizeHandle = h('div', {
-      class: `custom-handle custom-handle-${props.handleAxis} custom-resize-handle-component`,
+      class: `custom-handle custom-handle-${props.handleAxis} track-point-handle`,
       ...attrs,
     });
 
@@ -85,7 +85,7 @@ const App = {
     <div>
       <h1>Vue Resizable</h1>
       <div class="layoutRoot">
-        <Resizable className="box" :height="state.height" :width="state.width" :fnResize="onFirstBoxResize" :resizeHandles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']">
+        <Resizable className="box" hoverHandles :height="state.height" :width="state.width" :fnResize="onFirstBoxResize" :resizeHandles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']">
           <div :style="{width: state.width + 'px', height: state.height + 'px'}">
             <span class="text">{{"Raw use of <Resizable> element. 200x200, all Resize Handles."}}</span>
             <button @click="onResetClick" :style="{'marginTop': '10px'}">Reset this element's width/height</button>
@@ -103,11 +103,11 @@ const App = {
           <span class="text">{{"<ResizableBox> with custom overflow style & handle in SE corner."}}</span>
         </ResizableBox>
         <ResizableBox
-          className="custom-box box"
+          className="custom-box box track-point"
           :width="200"
           :height="200"
           :handle="CustomResizeHandle"
-          :handleSize="[8, 8]"
+          :handleSize="[20, 20]"
         >
           <span class="text">{{"<ResizableBox> with a custom resize handle component."}}</span>
         </ResizableBox>
@@ -126,7 +126,7 @@ const App = {
         <ResizableBox className="box" :width="200" :height="200" :minConstraints="[150, 150]" :maxConstraints="[500, 300]">
           <span class="text">Resizable box, starting at 200x200. Min size is 150x150, max is 500x300.</span>
         </ResizableBox>
-        <ResizableBox className="box hover-handles" :width="200" :height="200" :minConstraints="[150, 150]" :maxConstraints="[500, 300]">
+        <ResizableBox className="box" hoverHandles :width="200" :height="200" :minConstraints="[150, 150]" :maxConstraints="[500, 300]">
           <span class="text">Resizable box with a handle that only appears on hover.</span>
         </ResizableBox>
         <ResizableBox className="box" :width="200" :height="200" :lockAspectRatio="true" :resizeHandles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']">

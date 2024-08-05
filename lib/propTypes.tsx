@@ -80,6 +80,10 @@ export const resizableProps = {
     type: Boolean,
     default: false,
   },
+  hoverHandles: {
+    type: Boolean,
+    default: false,
+  },
   maxConstraints: {
     type: Array as PropType<number[]>,
     validator: (value: [number, number]) => value.length === 2 && value.every(Number.isFinite),

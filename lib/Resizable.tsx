@@ -1,11 +1,10 @@
 import { DraggableCore } from '@marsio/vue-draggable'
-import { defineComponent, onUnmounted, ref, Ref, VNode, renderSlot, cloneVNode, h, PropType, DefineComponent } from 'vue';
+import { defineComponent, onUnmounted, ref, Ref, VNode, cloneVNode, h, PropType, DefineComponent } from 'vue';
 import { css } from '@emotion/css';
-import { get } from 'lodash'
 
 import { generateHandleStyles } from './utils'
 
-import type {ResizeHandleAxis, VueRef, DragCallbackData, Props} from './propTypes';
+import type { ResizeHandleAxis, VueRef, DragCallbackData, Props } from './propTypes';
 
 const resizableStyle = css`
   position: relative;
@@ -165,10 +164,16 @@ export const Resizable = defineComponent({
     }
 
     const renderResizeHandle = (handleAxis: ResizeHandleAxis, refs: VueRef<HTMLElement>): VNode => {
-      const {handle} = props;
+      const {handle, handleSize = []} = props;
+      const [width, height] = handleSize 
       // No handle provided, make the default
       if (!handle) {
-        return <span class={`vue-resizable-handle vue-resizable-handle-${handleAxis}`} ref={refs} />;
+        return (
+          <span
+            class={`vue-resizable-handle vue-resizable-handle-${handleAxis}`}
+            style={{ width: `${width}px`, height: `${height}px` }} 
+          />
+        )
       }
       // Handle is a function, such as:
       if (typeof handle === 'function') {
@@ -180,7 +185,8 @@ export const Resizable = defineComponent({
         ref: refs,
         // Add `handleAxis` prop iff this is not a DOM element,
         // otherwise we'll get an unknown property warning
-        ...(isDOMElement ? {} : {handleAxis})
+        ...(isDOMElement ? {} : {handleAxis}),
+        style: { width: `${width}px`, height: `${height}px` }
       };
       return cloneVNode(handle as VNode, prop);
   
@@ -199,41 +205,42 @@ export const Resizable = defineComponent({
       /* eslint-disable @typescript-eslint/no-unused-vars */
       const {className, draggableOpts, width, height, handle, handleSize,
         lockAspectRatio, axis, minConstraints, maxConstraints, fnResize,
-        fnResizeStop, fnResizeStart, resizeHandles, transformScale, ...p} = props;
+        fnResizeStop, fnResizeStart, resizeHandles, transformScale, hoverHandles, ...p} = props;
       /* eslint-enable @typescript-eslint/no-unused-vars */
 
-        const slotContent = renderSlot(slots, 'default');
-        let children = slotContent.children;
+      const children = slots.default ? slots.default() : [];
 
-        if (!Array.isArray(children)) {
-          children = []; // 如果不是数组，则使用空数组
-        }
+      const handlers = props.resizeHandles.map((handleAxis: ResizeHandleAxis) => {
+        const refs = handleRefs[handleAxis] ?? (handleRefs[handleAxis] = ref(null));
 
-          const handlers = props.resizeHandles.map((handleAxis: ResizeHandleAxis) => {
-          const refs = handleRefs[handleAxis] ?? (handleRefs[handleAxis] = ref(null));
+        return (
+          <DraggableCore
+            {...props.draggableOpts}
+            nodeRef={refs}
+            key={`resizableHandle-${handleAxis}`}
+            stopFn={resizeHandler('fnResizeStop', handleAxis)}
+            startFn={resizeHandler('fnResizeStart', handleAxis)}
+            dragFn={resizeHandler('fnResize', handleAxis)}
+          >
+            {renderResizeHandle(handleAxis, refs)}
+          </DraggableCore>
+        )
+      })
 
-          return (
-            <DraggableCore
-              {...props.draggableOpts}
-              nodeRef={refs}
-              key={`resizableHandle-${handleAxis}`}
-              stopFn={resizeHandler('fnResizeStop', handleAxis)}
-              startFn={resizeHandler('fnResizeStart', handleAxis)}
-              dragFn={resizeHandler('fnResize', handleAxis)}
-            >
-              {renderResizeHandle(handleAxis, refs)}
-            </DraggableCore>
-          )
-        })
+      return children.map(child => {
+        if (!child) return [];
+        const nextChildren = !Array.isArray(child.children) ? [child.children] : child.children;
+        return h(
+          child.type as string,
+          { 
+            ...child.props,
+            class: [props.className, 'vue-resizable', resizableStyle, child.props?.class, hoverHandles ? 'hover-handles' : undefined], // 合并类名
+            ...p, // 传递其他属性
+          },
+          [...nextChildren, ...handlers]
+        );
+      });
 
-        const content = get(children, '0.children')
-        const clonedChildren = children.flatMap(child => {
-          return h(cloneVNode(child as VNode, {
-            class: [props.className, 'vue-resizable', resizableStyle],
-          }), [content, ...handlers]);
-        });
-        
-        return clonedChildren
     }
   },
 })

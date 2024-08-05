@@ -1,6 +1,6 @@
 # Vue Resizable 
 
-A simple widget that can be resized via one or more handles.
+A simple widget that can be resized via one or more handles. supports Vue3, with compatibility for both web and mobile platforms.
 
 You can either use the `<Resizable>` element directly, or use the much simpler `<ResizableBox>` element.
 
@@ -185,7 +185,8 @@ type ResizableProps {
     resizeHandles: ResizeHandleAxis[],
     transformScale: number,
     width: number,
-    height: number
+    height: number,
+    hoverHandles?: boolean
   }
 ```
 
