@@ -9,8 +9,10 @@ See the example and associated code in [ExampleLayout](/example/example.js) and
 
 ![resizable](https://github.com/marshal-zheng/vue-resizable/assets/24412317/f2713596-a6a7-45e9-a09f-feb527dfbeee)
 
-## Features
+[**[Demo](http://110.41.33.162:9002/) | [Changelog](/CHANGELOG.md) | [View Example](/example/example.js)**]
 
+## ✨ Features
+- **Compatibility**: Compatible with server-rendered apps, PC, and mobile devices.
 - **Resizable Component**: Allows elements to be resized with optional constraints. It supports the following features:
   - Customizable axis of resizing (`x`, `y`, or `both`).
   - Optional locking of aspect ratio.

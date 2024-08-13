@@ -83,7 +83,7 @@ const App = {
   },
   template: `
     <div>
-      <h1>Vue Resizable</h1>
+      <h1>Vue3 Resizable</h1>
       <div class="layoutRoot">
         <Resizable className="box" hoverHandles :height="state.height" :width="state.width" :fnResize="onFirstBoxResize" :resizeHandles="['sw', 'se', 'nw', 'ne', 'w', 'e', 'n', 's']">
           <div :style="{width: state.width + 'px', height: state.height + 'px'}">
